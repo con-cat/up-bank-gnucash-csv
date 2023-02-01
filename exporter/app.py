@@ -1,7 +1,7 @@
 from upbankapi import Client, models
 import datetime
 
-TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
+LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
 client = Client()
 
@@ -20,11 +20,11 @@ def get_transactions_for_account(
     since = datetime.datetime.combine(
         start_date,
         datetime.datetime.min.time(),
-        tzinfo=TIMEZONE,
+        tzinfo=LOCAL_TIMEZONE,
     )
     until = datetime.datetime.combine(
         end_date + datetime.timedelta(days=1),
         datetime.datetime.min.time(),
-        tzinfo=TIMEZONE,
+        tzinfo=LOCAL_TIMEZONE,
     )
     return account.transactions(since=since, until=until)

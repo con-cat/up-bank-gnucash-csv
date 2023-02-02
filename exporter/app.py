@@ -9,8 +9,6 @@ CSV_FIELDNAMES = ["date", "description", "deposit", "withdrawal"]
 # TODO: check if Up Bank uses local time or Melbourne time
 LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
-client = Client()
-
 
 class CSVExporter:
     def __init__(self) -> None:

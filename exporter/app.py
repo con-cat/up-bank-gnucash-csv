@@ -24,7 +24,7 @@ class CSVExporter:
         """Get parser for command line arguments"""
         parser = argparse.ArgumentParser(
             prog="up-bank-gnucash-csv",
-            description="Export transactions from Up Bank as CSVs formatted for GnuCash",
+            description="A simple CLI to fetch data from the Up Bank API and output CSVs for GnuCash.",
         )
         parser.add_argument(
             "--start",

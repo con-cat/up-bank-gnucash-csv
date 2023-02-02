@@ -5,7 +5,7 @@ import re
 
 from upbankapi import Client, UpBankException, models
 
-CSV_FIELDNAMES = ["date", "description", "amount"]
+CSV_FIELDNAMES = ["date", "description", "deposit", "withdrawal"]
 # TODO: check if Up Bank uses local time or Melbourne time
 LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
@@ -88,10 +88,13 @@ class CSVExporter:
             writer = csv.DictWriter(csvfile, fieldnames=CSV_FIELDNAMES)
             writer.writeheader()
             for transaction in transactions:
-                writer.writerow(
-                    {
-                        "date": transaction.created_at.date(),
-                        "description": transaction.description,
-                        "amount": transaction.amount,
-                    }
-                )
+                row = {
+                    "date": transaction.created_at.date(),
+                    "description": transaction.description,
+                }
+                if transaction.amount > 0:
+                    row["deposit"] = transaction.amount
+                else:
+                    row["withdrawal"] = abs(transaction.amount)
+
+                writer.writerow(row)

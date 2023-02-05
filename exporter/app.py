@@ -17,6 +17,7 @@ class CSVExporter:
         args = parser.parse_args()
         self.start_date = args.start
         self.end_date = args.end
+        self.select_account = not args.all_accounts
 
     def get_parser(self) -> argparse.ArgumentParser:
         """Get parser for command line arguments"""
@@ -36,6 +37,14 @@ class CSVExporter:
             help="End date to query, YYYY-MM-DD format",
             required=True,
         )
+        parser.add_argument(
+            "-a",
+            "--all-accounts",
+            help="Automatically save CSVs for all available accounts",
+            required=False,
+            default=False,
+            action="store_true",
+        )
         return parser
 
     def create_csvs(self) -> None:
@@ -48,15 +57,35 @@ class CSVExporter:
             return
 
         # Query for accounts
-        accounts = self.client.accounts()
-        print(f"💁‍♀️ Writing CSVs for {len(accounts)} accounts.")
+        available_accounts = self.client.accounts()
+        if self.select_account:
+            selected_account = self.prompt_for_account(available_accounts)
+            accounts = [selected_account]
+        else:
+            accounts = available_accounts
+            print(f"\n💁‍♀️ Writing CSVs for {len(accounts)} accounts.")
+
         for account in accounts:
             filename = self.get_filename_for_account(account)
             transactions = self.get_transactions_for_account(account)
             self.write_csv(filename, transactions)
-            print(f"📄 CSV written: {filename}")
+            print(f"    📄 CSV saved: {filename}")
 
-        print("All done 🎉")
+        print("\nAll done 🎉\n")
+
+    def prompt_for_account(
+        self, accounts: models.PaginatedList[models.Account]
+    ) -> models.Account:
+        """Ask the user which account they would like to export"""
+        print("\n💁‍♀️ Available accounts:")
+        for index, account in enumerate(accounts):
+            print(f"    {index}: {account.name}")
+        account_index = int(
+            input("\nEnter the number next to the account you would like to export: ")
+        )
+        selected = accounts[account_index]
+        print(f"\n💁‍♀️ Writing CSV for {selected.name}")
+        return selected
 
     def get_filename_for_account(self, account: models.Account) -> str:
         """Return a CSV filename for the account and date range"""

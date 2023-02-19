@@ -11,7 +11,7 @@ A simple CLI to fetch data from the [Up Bank](https://up.com.au/) API and output
 ### Installing dependencies
 
 ```shell
-pip install -r requirements.txt
+pip install -r requirements.dev.txt
 ```
 
 Python 3.11.1 is recommended. [pip-tools](https://github.com/jazzband/pip-tools) is used to manage dependencies.

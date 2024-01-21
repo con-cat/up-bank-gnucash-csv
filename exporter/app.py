@@ -6,7 +6,7 @@ from collections.abc import Sequence
 
 from upbankapi import Client, UpBankException, models
 
-CSV_FIELDNAMES = ["date", "description", "deposit", "withdrawal"]
+CSV_FIELDNAMES = ["date", "description", "notes", "deposit", "withdrawal"]
 # TODO: check if Up Bank uses local time or Melbourne time
 LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
@@ -131,6 +131,7 @@ class CSVExporter:
                 row = {
                     "date": transaction.created_at.date(),
                     "description": transaction.description,
+                    "notes": transaction.message,
                 }
                 if transaction.amount > 0:
                     row["deposit"] = transaction.amount

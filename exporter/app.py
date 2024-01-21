@@ -71,7 +71,7 @@ class CSVExporter:
     ) -> Sequence[models.Account]:
         """Ask the user which account they would like to export"""
         print("\n💁‍♀️ Available accounts:")
-        print(f"    0: All accounts")
+        print("    0: All accounts")
         for index, account in enumerate(accounts):
             print(f"    {index + 1}: {account.name}")
 

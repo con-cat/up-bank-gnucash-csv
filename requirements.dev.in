@@ -1,4 +1,6 @@
 -r requirements.txt
 
-isort
 mypy
+pip-tools
+python-lsp-server
+ruff

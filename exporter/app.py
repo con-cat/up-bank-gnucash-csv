@@ -18,6 +18,8 @@ class CSVExporter:
     all_accounts: bool = False
 
     def __post_init__(self) -> None:
+        if self.start_date > self.end_date:
+            raise ValueError("start_date must be before or equal to end_date")
         self.client = Client()
         self.select_account = not self.all_accounts
 
@@ -72,6 +74,9 @@ class CSVExporter:
         for account in accounts:
             filename = self.get_filename_for_account(account)
             transactions = self.get_transactions_for_account(account)
+            if not transactions:
+                print(f"    ⚠️  No transactions for {account.name}, skipping.")
+                continue
             self.write_csv(filename, transactions)
             print(f"    📄 CSV saved: {filename}")
 
@@ -100,18 +105,22 @@ class CSVExporter:
     def write_csv(
         self, filename: Path, transactions: models.PaginatedList[models.Transaction]
     ) -> None:
-        with open(filename, "w", newline="") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=CSV_FIELDNAMES)
-            writer.writeheader()
-            for transaction in transactions:
-                row = {
-                    "date": transaction.created_at.date(),
-                    "description": transaction.description,
-                    "notes": transaction.message,
-                }
-                if transaction.amount > 0:
-                    row["deposit"] = transaction.amount
-                else:
-                    row["withdrawal"] = abs(transaction.amount)
+        try:
+            with open(filename, "w", newline="") as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=CSV_FIELDNAMES)
+                writer.writeheader()
+                for transaction in transactions:
+                    row = {
+                        "date": transaction.created_at.date(),
+                        "description": transaction.description,
+                        "notes": transaction.message,
+                    }
+                    if transaction.amount > 0:
+                        row["deposit"] = transaction.amount
+                    else:
+                        row["withdrawal"] = abs(transaction.amount)
 
-                writer.writerow(row)
+                    writer.writerow(row)
+        except OSError as e:
+            print(f"Error writing to {filename}: {e}")
+            raise

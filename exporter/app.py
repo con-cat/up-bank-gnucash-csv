@@ -2,25 +2,23 @@ import csv
 import datetime
 import re
 from collections.abc import Sequence
+from dataclasses import dataclass
 
 from upbankapi import Client, UpBankException, models
 
 CSV_FIELDNAMES = ["date", "description", "notes", "deposit", "withdrawal"]
-# TODO: check if Up Bank uses local time or Melbourne time
 LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
 
+@dataclass
 class CSVExporter:
-    def __init__(
-        self,
-        start_date: datetime.date,
-        end_date: datetime.date,
-        all_accounts: bool = False,
-    ) -> None:
+    start_date: datetime.date
+    end_date: datetime.date
+    all_accounts: bool = False
+
+    def __post_init__(self) -> None:
         self.client = Client()
-        self.start_date = start_date
-        self.end_date = end_date
-        self.select_account = not all_accounts
+        self.select_account = not self.all_accounts
 
     def create_csvs(self) -> None:
         """Write CSVs of transaction data for all accounts"""

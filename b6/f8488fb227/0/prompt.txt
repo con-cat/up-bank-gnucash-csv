@@ -1,0 +1,1 @@
+I meant make separate atomic commits for each step - can you soft reset and do that?

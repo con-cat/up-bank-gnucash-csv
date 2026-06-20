@@ -1,4 +1,3 @@
-import argparse
 import csv
 import datetime
 import re
@@ -12,41 +11,16 @@ LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinf
 
 
 class CSVExporter:
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        start_date: datetime.date,
+        end_date: datetime.date,
+        all_accounts: bool = False,
+    ) -> None:
         self.client = Client()
-        parser = self.get_parser()
-        args = parser.parse_args()
-        self.start_date = args.start
-        self.end_date = args.end
-        self.select_account = not args.all_accounts
-
-    def get_parser(self) -> argparse.ArgumentParser:
-        """Get parser for command line arguments"""
-        parser = argparse.ArgumentParser(
-            prog="up-bank-gnucash-csv",
-            description="A simple CLI to fetch data from the Up Bank API and output CSVs for GnuCash.",
-        )
-        parser.add_argument(
-            "--start",
-            type=datetime.date.fromisoformat,
-            help="Start date to query, YYYY-MM-DD format",
-            required=True,
-        )
-        parser.add_argument(
-            "--end",
-            type=datetime.date.fromisoformat,
-            help="End date to query, YYYY-MM-DD format",
-            required=True,
-        )
-        parser.add_argument(
-            "-a",
-            "--all-accounts",
-            help="Automatically save CSVs for all available accounts",
-            required=False,
-            default=False,
-            action="store_true",
-        )
-        return parser
+        self.start_date = start_date
+        self.end_date = end_date
+        self.select_account = not all_accounts
 
     def create_csvs(self) -> None:
         """Write CSVs of transaction data for all accounts"""

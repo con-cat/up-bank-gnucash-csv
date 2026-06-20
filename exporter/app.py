@@ -40,7 +40,7 @@ class CSVExporter:
 
     def prompt_for_account(
         self, accounts: models.PaginatedList[models.Account]
-    ) -> Sequence[models.Account]:
+    ) -> list[models.Account]:
         """Ask the user which account they would like to export"""
         print("\n💁‍♀️ Available accounts:")
         print("    0: All accounts")
@@ -55,9 +55,13 @@ class CSVExporter:
             print("That doesn't look like an account number - please try again.")
             return self.prompt_for_account(accounts)
 
+        if account_index < 0 or account_index > len(accounts):
+            print(f"Please enter a number between 0 and {len(accounts)}.")
+            return self.prompt_for_account(accounts)
+
         if account_index == 0:
             print(f"\n💁‍♀️ Writing CSVs for {len(accounts)} accounts.")
-            return accounts
+            return list(accounts)
 
         selected = accounts[account_index - 1]
         print(f"\n💁‍♀️ Writing CSV for {selected.name}")

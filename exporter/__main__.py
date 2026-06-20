@@ -1,7 +1,7 @@
 import argparse
 import datetime
 
-from .app import CSVExporter
+import app
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -35,7 +35,7 @@ def get_parser() -> argparse.ArgumentParser:
 if __name__ == "__main__":
     parser = get_parser()
     args = parser.parse_args()
-    exporter = CSVExporter(
+    exporter = app.CSVExporter(
         start_date=args.start,
         end_date=args.end,
         all_accounts=args.all_accounts,

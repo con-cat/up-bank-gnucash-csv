@@ -19,7 +19,7 @@ pip install -r requirements.dev.txt
 ### Running the thing
 
 ```shell
-python exporter --start 2022-05-01 --end 2022-05-31
+python -m exporter --start 2022-05-01 --end 2022-05-31
 ```
 
 Run the `exporter` command with the start and end dates you want to create CSVs for in yyyy-mm-dd format.

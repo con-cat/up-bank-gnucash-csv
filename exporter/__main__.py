@@ -1,7 +1,7 @@
 import argparse
 import datetime
 
-from exporter.app import CSVExporter
+from .app import CSVExporter
 
 
 def get_parser() -> argparse.ArgumentParser:

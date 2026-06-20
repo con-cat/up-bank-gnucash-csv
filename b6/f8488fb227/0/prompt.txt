@@ -1,1 +1,3 @@
-I meant make separate atomic commits for each step - can you soft reset and do that?
+I'm getting this error when I try to run the script now: File "/Users/caitlin/src/con-cat/up-bank-gnucash-csv/exporter/__main__.py", line 4, in <module>
+    from exporter.app import CSVExporter
+ModuleNotFoundError: No module named 'exporter'

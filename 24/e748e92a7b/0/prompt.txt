@@ -1,1 +1,1 @@
-Commit that
+Can you amend that commit with a description of what it's doing and why?

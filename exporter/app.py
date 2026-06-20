@@ -3,6 +3,7 @@ import datetime
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass
+from pathlib import Path
 
 from upbankapi import Client, UpBankException, models
 
@@ -76,11 +77,10 @@ class CSVExporter:
 
         print("\nAll done 🎉\n")
 
-    def get_filename_for_account(self, account: models.Account) -> str:
+    def get_filename_for_account(self, account: models.Account) -> Path:
         """Return a CSV filename for the account and date range"""
-        # Remove non-alphanumeric characters from the account name
         account_name = re.sub(r"\W+", "", account.name)
-        return f"{account_name}_{self.start_date.isoformat()}_{self.end_date.isoformat()}.csv"
+        return Path(f"{account_name}_{self.start_date.isoformat()}_{self.end_date.isoformat()}.csv")
 
     def get_transactions_for_account(
         self, account: models.Account
@@ -98,7 +98,7 @@ class CSVExporter:
         return account.transactions(since=since, until=until)
 
     def write_csv(
-        self, filename: str, transactions: models.PaginatedList[models.Transaction]
+        self, filename: Path, transactions: models.PaginatedList[models.Transaction]
     ) -> None:
         with open(filename, "w", newline="") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=CSV_FIELDNAMES)

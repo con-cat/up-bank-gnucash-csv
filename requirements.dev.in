@@ -1,6 +1,0 @@
--r requirements.txt
-
-mypy
-pip-tools
-python-lsp-server
-ruff

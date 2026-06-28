@@ -11,10 +11,10 @@ A simple CLI to fetch data from the [Up Bank](https://up.com.au/) API and output
 ### Installing dependencies
 
 ```shell
-pip install -r requirements.dev.txt
+uv sync --dev
 ```
 
-[pip-tools](https://github.com/jazzband/pip-tools) is used to manage dependencies.
+[uv](https://github.com/astral-sh/uv) is used to manage dependencies.
 
 ### Running the thing
 

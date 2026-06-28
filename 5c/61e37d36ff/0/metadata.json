@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "5c61e37d36ff",
+  "session_id": "ses_11b42c8ecffeXa6Ofen4NzwLQA",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-28T05:01:07.062491Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md"
+  ],
+  "agent": "OpenCode",
+  "model": "minimax-m2.5:cloud",
+  "turn_id": "77ed10dd82cf",
+  "checkpoint_transcript_start": 95,
+  "transcript_lines_at_start": 95,
+  "token_usage": {
+    "input_tokens": 37253,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 111,
+    "api_call_count": 2
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-28T05:01:07.05417Z",
+    "agent_lines": 1,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1,
+    "total_lines_changed": 1,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 267,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".opencode/plugins/entire.ts": 267
+      }
+    }
+  ]
+}

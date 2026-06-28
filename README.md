@@ -11,6 +11,7 @@ A simple CLI to fetch data from the [Up Bank](https://up.com.au/) API and output
 ### Installing dependencies
 
 ```shell
+uv venv
 uv sync --dev
 ```
 

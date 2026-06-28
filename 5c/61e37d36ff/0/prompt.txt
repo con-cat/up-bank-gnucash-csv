@@ -1,1 +1,1 @@
-Commit that please
+Can you also add instructions for making a virtual environment with uv to the readme?

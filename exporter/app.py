@@ -15,25 +15,19 @@ LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinf
 class CSVExporter:
     start_date: datetime.date
     end_date: datetime.date
-    all_accounts: bool = False
 
     def __post_init__(self) -> None:
         if self.start_date > self.end_date:
             raise ValueError("start_date must be before or equal to end_date")
         self.client = Client()
-        self.select_account = not self.all_accounts
 
     def create_csvs(self) -> None:
-        """Write CSVs of transaction data for all accounts"""
+        """Write CSVs of transaction data for the selected account"""
         # Make sure we can connect to the API
         try:
             # Query for accounts
             available_accounts = self.client.accounts()
-            if self.select_account:
-                accounts = self.prompt_for_account(available_accounts)
-            else:
-                accounts = available_accounts
-                print(f"\n💁‍♀️ Writing CSVs for {len(accounts)} accounts.")
+            accounts = self.prompt_for_account(available_accounts)
 
             self.create_csvs_for_accounts(accounts)
 

@@ -21,14 +21,6 @@ def get_parser() -> argparse.ArgumentParser:
         help="End date to query, YYYY-MM-DD format",
         required=True,
     )
-    parser.add_argument(
-        "-a",
-        "--all-accounts",
-        help="Automatically save CSVs for all available accounts",
-        required=False,
-        default=False,
-        action="store_true",
-    )
     return parser
 
 
@@ -38,6 +30,5 @@ if __name__ == "__main__":
     exporter = app.CSVExporter(
         start_date=args.start,
         end_date=args.end,
-        all_accounts=args.all_accounts,
     )
     exporter.create_csvs()
